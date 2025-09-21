@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 
 prefix = env("url_prefix", "")
 auto_include_routers(api, prefix, "app/controller")
+
 public_dir = os.environ.get("PUBLIC_DIR") or os.path.join(os.path.dirname(__file__), "app", "public")
 # Ensure static directory exists or gracefully skip mounting
 if not os.path.isdir(public_dir):
