@@ -209,6 +209,12 @@ export default function Folder({ data }: { data?: Agent }) {
 			isFolder: true,
 		};
 
+		// Ensure files is an array
+		if (!Array.isArray(files)) {
+			console.warn('buildFileTree received non-array data:', files);
+			return root;
+		}
+
 		// Create a map for quick access
 		const nodeMap = new Map<string, FileTreeNode>();
 		nodeMap.set("", root);

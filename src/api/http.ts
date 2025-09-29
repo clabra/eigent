@@ -11,8 +11,16 @@ export async function getBaseURL() {
   if (baseUrl) {
     return baseUrl
   }
-  const port = await window.ipcRenderer.invoke('get-backend-port')
-  baseUrl = `http://localhost:${port}`
+
+  // Check if running in Electron (has ipcRenderer)
+  if (window.ipcRenderer) {
+    const port = await window.ipcRenderer.invoke('get-backend-port')
+    baseUrl = `http://localhost:${port}`
+  } else {
+    // Fallback for web mode - use AI backend port
+    baseUrl = `http://localhost:5001`
+  }
+
   return baseUrl
 }
 

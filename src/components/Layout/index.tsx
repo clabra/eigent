@@ -25,24 +25,35 @@ const Layout = () => {
 			}
 		};
 
-		window.ipcRenderer.on("before-close", handleBeforeClose);
+		// Only set up IPC listeners in Electron environment
+		if (window.ipcRenderer?.on) {
+			window.ipcRenderer.on("before-close", handleBeforeClose);
+		}
 
 		return () => {
-			window.ipcRenderer.removeAllListeners("before-close");
+			if (window.ipcRenderer?.removeAllListeners) {
+				window.ipcRenderer.removeAllListeners("before-close");
+			}
 		};
 	}, [chatStore.tasks, chatStore.activeTaskId]);
 
 	useEffect(() => {
 		const checkToolInstalled = async () => {
-			// in render process
-			const result = await window.ipcRenderer.invoke("check-tool-installed");
-			if (result.success) {
-				if (initState === "done" && !result.isInstalled) {
-					setInitState("carousel");
+			// Only check tool installation in Electron environment
+			if (window.ipcRenderer?.invoke) {
+				// in render process
+				const result = await window.ipcRenderer.invoke("check-tool-installed");
+				if (result.success) {
+					if (initState === "done" && !result.isInstalled) {
+						setInitState("carousel");
+					}
+					console.log("tool is installed:");
+				} else {
+					console.error("check failed:", result.error);
 				}
-				console.log("tool is installed:");
 			} else {
-				console.error("check failed:", result.error);
+				// Web environment - assume tools are not needed
+				console.log("Web environment - skipping tool installation check");
 			}
 		};
 		checkToolInstalled();

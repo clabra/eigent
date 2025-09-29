@@ -8,6 +8,7 @@ import animationData from "@/assets/animation/openning_animaiton.json";
 import { useAuthStore } from "./store/authStore";
 import { Toaster } from "sonner";
 import { hasStackKeys } from "./lib";
+import { AutoLogin } from "@/components/AutoLogin";
 
 const HAS_STACK_KEYS = hasStackKeys();
 
@@ -84,7 +85,12 @@ function App() {
 		);
 	};
 
-	return renderWrapper(renderMainContent());
+	return renderWrapper(
+		<>
+			<AutoLogin />
+			{renderMainContent()}
+		</>
+	);
 }
 
 export default App;

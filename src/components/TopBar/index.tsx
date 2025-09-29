@@ -32,14 +32,20 @@ function HeaderWin() {
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const { token } = getAuthStore();
 	useEffect(() => {
-		const p = window.electronAPI.getPlatform();
-		setPlatform(p);
+		// Check if we're in Electron environment
+		if (window.electronAPI?.getPlatform) {
+			const p = window.electronAPI.getPlatform();
+			setPlatform(p);
 
-		if (platform === "darwin") {
-			titlebarRef.current?.classList.add("mac");
-			if (controlsRef.current) {
-				controlsRef.current.style.display = "none";
+			if (platform === "darwin") {
+				titlebarRef.current?.classList.add("mac");
+				if (controlsRef.current) {
+					controlsRef.current.style.display = "none";
+				}
 			}
+		} else {
+			// Web environment - default to 'web' platform
+			setPlatform("web");
 		}
 	}, []);
 

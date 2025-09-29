@@ -301,7 +301,7 @@ const chatStore = create<ChatStore>()(
 					model_platform: apiModel.model_platform,
 					email,
 					model_type: apiModel.model_type,
-					api_key: apiModel.api_key,
+					api_key: apiModel.api_key || window.localStorage.getItem('test_openai_key') || '',
 					api_url: apiModel.api_url,
 					extra_params: apiModel.extra_params,
 					installed_mcp: mcpLocal,

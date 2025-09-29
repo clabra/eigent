@@ -26,15 +26,8 @@ export default function ChatBox(): JSX.Element {
 	const { modelType } = useAuthStore();
 	const [useCloudModelInDev, setUseCloudModelInDev] = useState(false);
 	useEffect(() => {
-		// Only show warning message, don't block functionality
-		if (
-			import.meta.env.VITE_USE_LOCAL_PROXY === "true" &&
-			modelType === "cloud"
-		) {
-			setUseCloudModelInDev(true);
-		} else {
-			setUseCloudModelInDev(false);
-		}
+		// Temporarily disable this check for development
+		setUseCloudModelInDev(false);
 	}, [modelType]);
 	useEffect(() => {
 		proxyFetchGet("/api/user/privacy")
