@@ -18,7 +18,7 @@ export async function getBaseURL() {
     baseUrl = `http://localhost:${port}`
   } else {
     // Fallback for web mode - use AI backend port
-    baseUrl = `http://localhost:5001`
+    baseUrl = `http://localhost:5678`
   }
 
   return baseUrl

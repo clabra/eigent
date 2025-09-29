@@ -37,6 +37,7 @@ from app.utils.toolkit.github_toolkit import GithubToolkit
 from app.utils.toolkit.search_toolkit import SearchToolkit
 from app.utils.toolkit.video_download_toolkit import VideoDownloaderToolkit
 from app.utils.toolkit.audio_analysis_toolkit import AudioAnalysisToolkit
+from app.utils.toolkit.calculator_mcp_toolkit import CalculatorMCPToolkit
 from app.utils.toolkit.video_analysis_toolkit import VideoAnalysisToolkit
 from app.utils.toolkit.image_analysis_toolkit import ImageAnalysisToolkit
 from app.utils.toolkit.openai_image_toolkit import OpenAIImageToolkit
@@ -1426,6 +1427,7 @@ async def get_toolkits(tools: list[str], agent_name: str, api_task_id: str):
     traceroot_logger.info(f"Getting toolkits for agent: {agent_name}, task: {api_task_id}, tools: {tools}")
     toolkits = {
         "audio_analysis_toolkit": AudioAnalysisToolkit,
+        "calculator_mcp_toolkit": CalculatorMCPToolkit,
         "openai_image_toolkit": OpenAIImageToolkit,
         "excel_toolkit": ExcelToolkit,
         "file_write_toolkit": FileToolkit,

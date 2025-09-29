@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from app.utils.toolkit.notion_mcp_toolkit import NotionMCPToolkit
+from app.utils.toolkit.calculator_mcp_toolkit import CalculatorMCPToolkit
 
 
 router = APIRouter(tags=["task"])
@@ -11,8 +12,12 @@ async def install_tool(tool: str):
     if tool == "notion":
         toolkit = NotionMCPToolkit(tool)
         await toolkit.connect()
+        tools = [tool.func.__name__ for tool in toolkit.get_tools()]
+        await toolkit.disconnect()
+        return tools
+    elif tool == "calculator":
+        toolkit = CalculatorMCPToolkit(tool)
+        tools = [tool.func.__name__ for tool in toolkit.get_tools()]
+        return tools
     else:
         return {"error": "Tool not found"}
-    tools = [tool.func.__name__ for tool in toolkit.get_tools()]
-    await toolkit.disconnect()
-    return tools

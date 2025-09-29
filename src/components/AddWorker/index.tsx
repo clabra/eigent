@@ -199,9 +199,11 @@ export function AddWorker({
 			}
 		});
 		console.log("mcpLocal.mcpServers", mcpLocal.mcpServers);
-		for(const key of Object.keys(mcpLocal.mcpServers)) {
-			if (!mcpList.includes(key)) {
-				delete mcpLocal.mcpServers[key];
+		if (mcpLocal.mcpServers && typeof mcpLocal.mcpServers === 'object') {
+			for(const key of Object.keys(mcpLocal.mcpServers)) {
+				if (!mcpList.includes(key)) {
+					delete mcpLocal.mcpServers[key];
+				}
 			}
 		}
 		if (edit) {
